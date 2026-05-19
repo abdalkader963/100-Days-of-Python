@@ -1,4 +1,7 @@
 #simple blackjack game
+import os
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 import random
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 def calculate_score(player):
@@ -34,12 +37,21 @@ def user_gameplay(user, bot, bot_score):
         print("Tie!")
     else:
         print("You lost!")
+goal=False
 game = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
-if game == "y":
-    user = random.sample(cards, 2)
-    bot = random.sample(cards, 2)
-    user_score = calculate_score(user)
-    bot_score = calculate_score(bot)
-    print(f"Your cards: {user}, current score: {user_score}")
-    print(f"Computer's first card: {bot[0]}")
-    user_gameplay(user, bot, bot_score)
+while not goal:
+    if game == "y":
+        user = random.sample(cards, 2)
+        bot= random.sample(cards, 2)
+        user_score = calculate_score(user)
+        bot_score = calculate_score(bot)
+        print(f"Your cards: {user}, current score: {user_score}")
+        print(f"Computer's first card: {bot[0]}")
+        user_gameplay(user, bot, bot_score)
+        goal=True
+    again=input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
+    if again=="y":
+        clear_screen()
+        goal=False
+    else:  
+        clear_screen()  
