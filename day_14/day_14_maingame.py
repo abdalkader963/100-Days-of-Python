@@ -1,7 +1,5 @@
 #main game
-from game_data import data
-from game_data import logo
-from game_data import vs_art
+from game_data import data , logo , vs_art
 import random 
 import os
 def clear_screen():
