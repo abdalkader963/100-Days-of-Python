@@ -64,7 +64,7 @@ def prices(user_in):
             resources["money"]+=user_bill
             if total_in< user_bill:
                 print("Sorry thats not enough money, money refunded.")
-                return True
+                return "no"
             elif total_in== user_bill:
                 print(f"Here is your {user_in} enjoy")   
                 return True
@@ -108,5 +108,8 @@ while True:
     elif machine== "report":
         True
     else:    
-        prices(user_in=user_drink)    
-        new=changes(user_in=machine)
+        p=prices(user_in=user_drink)    
+        if p != "no":
+            new=changes(user_in=machine)
+        else:
+            True    
