@@ -1,5 +1,6 @@
 from turtle import Turtle
 class Score(Turtle):
+    
     def __init__(self):
         super().__init__()
         self.color("white")
@@ -11,7 +12,10 @@ class Score(Turtle):
         self.write(self.l_score , align="center" , font=("Courier" ,80 ,"normal"))
         self.goto(100,175)
         self.write(self.r_score , align="center" , font=("Courier" ,80 ,"normal"))
+
     def inc_score(self):
         self.clear()
+        self.goto(-100,175)
         self.write(self.l_score , align="center" , font=("Courier" ,80 ,"normal"))
+        self.goto(100,175)
         self.write(self.r_score , align="center" , font=("Courier" ,80 ,"normal"))
