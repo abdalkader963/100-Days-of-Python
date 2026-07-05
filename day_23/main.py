@@ -13,13 +13,15 @@ player=Player()
 car = CarManager()
 score=Scoreboard()
 
-screen.onkey(player.move , "w")
+screen.onkeypress(player.start_moving , "w")
+screen.onkeyrelease(player.stop_moving , "w")
 
 _time=0.1
 game_is_on = True
 while game_is_on:
     time.sleep(_time)
     screen.update()
+    player.move()
     if player.ycor()>280:
         player.rest_pos()
         score.level+=1

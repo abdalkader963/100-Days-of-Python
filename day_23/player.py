@@ -10,9 +10,17 @@ class Player(Turtle):
         self.setheading(90)
         self.shape("turtle")
         self.goto(STARTING_POSITION)
+        self.is_moving=False
+
+    def start_moving(self):
+        self.is_moving=True        
+
+    def stop_moving(self):
+        self.is_moving=False
 
     def move(self):
-        self.fd(MOVE_DISTANCE)
+        if self.is_moving :
+            self.fd(MOVE_DISTANCE)
 
     def rest_pos(self):
         self.goto(STARTING_POSITION)
