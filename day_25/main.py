@@ -13,9 +13,21 @@ while len(states_gussed) < 50:
     gussed = len(states_gussed)
     user_answer = screen.textinput(title=f"{gussed}/50 ", prompt="The state is:")
     if user_answer == None:
+        missing_state=[]
+        for state in states:
+            if state not in states_gussed:
+                missing_state.append(state)
+                missing = pd.DataFrame(missing_state)
+                missing.to_csv("states_to_learn.csv")
         break
     user_answer = user_answer.title()
     if user_answer == "Exit":
+        missing_state=[]
+        for state in states:
+            if state not in states_gussed:
+                missing_state.append(state)
+            missing = pd.DataFrame(missing_state)
+            missing.to_csv("states_to_learn.csv")
         break
     if user_answer in states_gussed:
         pass
