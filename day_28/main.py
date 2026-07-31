@@ -7,14 +7,28 @@ RED = "#e7305b"
 GREEN = "#83b890"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
-SHORT_BREAK_MIN = 5 
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 10
 reps = 0
+my_timer = None
+marks =""
 # ---------------------------- TIMER RESET ------------------------------- # 
-
+def rest_timer():
+    global marks
+    marks = ""
+    check_marks.configure(text = marks)
+    window.after_cancel(my_timer)
+    canvas.itemconfig(timer , text="00:00")
+    lab.configure(text="Timer" , text_color=GREEN)
+    global reps 
+    reps = 0
+    
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
+    global my_timer
+    if my_timer != None:
+        window.after_cancel(my_timer)
     global reps
     reps +=1
     work_secs = WORK_MIN * 60
@@ -33,6 +47,7 @@ def start_timer():
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def countdown(time):
+    global repr
     mins= math.floor(time/60)
     secs = time % 60    
     if secs == 0 :
@@ -40,11 +55,16 @@ def countdown(time):
     elif secs <10:
         secs = f"0{secs}"
     if time>=0:
-        window.after(1000 , countdown , time -1)
+        global my_timer
+        my_timer=window.after(1000 , countdown , time -1)
         canvas.itemconfig(timer , text= f"{mins}:{secs}")
     if time == 0:
         start_timer()    
-
+        global marks 
+        work_sessions = math.floor(reps/2)
+        for _ in range(work_sessions):
+            marks+= "✓"
+        check_marks.configure(text = marks)
 # ---------------------------- UI SETUP ------------------------------- #
 window = ctk.CTk()
 window.title("pomodoro")
@@ -63,7 +83,7 @@ lab = ctk.CTkLabel(master=window , text="Timer" , text_color=GREEN ,font=(FONT_N
 lab.grid(column=2 , row = 1 , padx=10 , pady=10)
 
 #buttons
-rest_bu=ctk.CTkButton(master=window , text="Rest")
+rest_bu=ctk.CTkButton(master=window , text="Rest" , command=rest_timer)
 rest_bu.grid(column=3 , row=3 , padx=10 , pady=10)
 ##
 start_bu=ctk.CTkButton(master=window , text="Start" , command=start_timer)
