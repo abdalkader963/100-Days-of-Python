@@ -19,23 +19,30 @@ timer = None
 
 def right():
     words.remove(current_card)
+    data_to_save = pd.DataFrame(words)
+    data_to_save.to_csv("./data/words_to_learn.csv", index=False)
     new_flash()
+
 def flip_card():
     canvas.itemconfig(lang , text="English")
     canvas.itemconfig(word , text=current_card["English"])
     canvas.itemconfig(image_fr , image=back_image)
+
 def new_flash():
     global current_card, timer
     if timer:
         window.after_cancel(timer)
-
-    current_card = random.choice(words)
-    canvas.itemconfig(image_fr, image=front_image)
-    canvas.itemconfig(lang, text="French")
-    canvas.itemconfig(word, text=current_card["French"])
-
-    timer = window.after(3000, flip_card)
-    
+    try:
+        current_card = random.choice(words)
+        canvas.itemconfig(image_fr, image=front_image)
+        canvas.itemconfig(lang, text="French")
+        canvas.itemconfig(word, text=current_card["French"])
+        timer = window.after(3000, flip_card)
+    except (IndexError):
+        canvas.itemconfig(image_fr, image=front_image)
+        canvas.itemconfig(lang, text="Done!", fill="black", font=("Arial", 50, "bold"))
+        canvas.itemconfig(word,text="Great job! All words learned.",fill="black",font=("Arial", 24, "normal"))
+        return
     
 window = ctk.CTk()
 window.config(padx=50 , pady=50 , background=BACKGROUND_COLOR)  
